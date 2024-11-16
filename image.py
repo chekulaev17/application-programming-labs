@@ -42,36 +42,14 @@ def binarize_image(image: np.ndarray, threshold: int = 128) -> np.ndarray:
     return binary_image
 
 
-def save_image(image: np.ndarray, output_path: str) -> None:
+def save_image(image: np.ndarray, output_path: str) -> bool:
     """
     Saves an image to the specified path.
     :param image: Image to be saved, as a numpy ndarray.
     :param output_path: Path where the image will be saved.
-    :return: None. Prints success or error message upon saving.
+    :return: True if image was saved successfully, False otherwise.
     """
-    success = cv.imwrite(output_path, image)
-    if success:
-        print(f"Image successfully saved to: {output_path}")
-    else:
-        print(f"Error saving image to: {output_path}")
-
-        def display_images(original: np.ndarray, transformed: np.ndarray) -> None:
-            """
-            Displays the original and transformed (binary) images side by side.
-            :param original: Original image as a numpy ndarray.
-            :param transformed: Transformed (binary) image as a numpy ndarray.
-            :return: None.
-            """
-            plt.figure(figsize=(12, 6))
-            plt.subplot(1, 2, 1)
-            plt.title("Original Image")
-            plt.imshow(cv.cvtColor(original, cv.COLOR_BGR2RGB))
-            plt.axis('off')
-            plt.subplot(1, 2, 2)
-            plt.title("Binary Image")
-            plt.imshow(transformed, cmap='gray')
-            plt.axis('off')
-            plt.show()
+    return cv.imwrite(output_path, image)
 
 
 def display_images(original: np.ndarray, transformed: np.ndarray) -> None:
