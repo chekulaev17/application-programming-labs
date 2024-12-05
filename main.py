@@ -27,22 +27,15 @@ def generate_annotation(images_dir: str, csv_file: str) -> None:
     """
     if not os.path.isdir(images_dir):
         raise FileNotFoundError(f"The specified directory does not exist: {images_dir}")
-
     try:
         with open(csv_file, 'w', newline='', encoding='utf-8') as f:
             csv_writer = csv.writer(f)
-
-            # Headers must match the expected format of the main program
             csv_writer.writerow(['absolute_path', 'relative_path'])
-
-            # Iterate through image files in the directory
             for image_file in filter(lambda f: f.lower().endswith(('.jpg', '.jpeg', '.png')), os.listdir(images_dir)):
                 abs_path = os.path.abspath(os.path.join(images_dir, image_file))
-                rel_path = os.path.relpath(abs_path, start=os.getcwd())  # Relative to the current working directory
+                rel_path = os.path.relpath(abs_path, start=os.getcwd()) 
                 csv_writer.writerow([abs_path, rel_path])
-
         print(f"Annotation file created successfully at: {csv_file}")
-
     except Exception as e:
         print(f"An error occurred while creating the annotation file: {e}")
 
@@ -140,23 +133,17 @@ def main() -> None:
     """
     try:
         args = parse_arguments()
-
         df = generate_dataframe(args.annotation)
         df = add_image_dimensions(df)
-
         print("Statistics for image dimensions:")
         print(calculate_statistics(df))
-
         filtered_df = filter_by_dimensions(df, args.max_height, args.max_width)
         print("Filtered data:")
         print(filtered_df)
-
         df = add_image_area(df)
         df = sort_by_area(df)
-
         print("Data after sorting by area:")
         print(df)
-
         plot_area_histogram(df)
     except Exception as e:
         print(f"An error occurred: {e}")
