@@ -14,7 +14,7 @@ class PigsIterator:
         self.file = open(self.path_to_csv, 'r')
         self.csvreader = csv.reader(self.file)
         try:
-            header = next(self.csvreader)  # Skip header
+            header = next(self.csvreader) 
             if not header:
                 raise ValueError("CSV file is empty or missing a header.")
         except StopIteration:
@@ -26,7 +26,7 @@ class PigsIterator:
     def __next__(self):
         """Return the next image path."""
         try:
-            return next(self.csvreader)[0]  # Image path is in the first column
+            return next(self.csvreader)[0]  
         except StopIteration:
             self.file.close()
             raise StopIteration
